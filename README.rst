@@ -1,3 +1,8 @@
+## Lab5 - Jonathan Coe Submission
+
+This is a simple Flask app that connects to a local MongoDB. It reads, inserts to and deletes from a collection
+
+
 Base Skeleton to start your application using Flask-AppBuilder and MongoEngine
 ------------------------------------------------------------------------------
 
