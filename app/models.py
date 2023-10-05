@@ -7,3 +7,8 @@ Define you MongoEngine Models here
 
 """
 
+
+class User(Document):
+    name = StringField()
+    email = StringField()
+    meta = {"collection": "User", "allow_inheritance": False}
