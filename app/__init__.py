@@ -1,5 +1,5 @@
 import logging
-from flask import Flask
+from flask import Flask, request
 from flask_appbuilder.security.mongoengine.manager import SecurityManager
 from flask_appbuilder import AppBuilder
 from flask_mongoengine import MongoEngine
@@ -37,3 +37,15 @@ from app import views, models
 def list_all_users():
     data = list(models.User.objects)
     return data
+
+
+@app.route("/insert", methods=["POST"])
+def create_user():
+    # retrieve data from html form
+    name = request.form.get("user_name")
+    email = request.form.get("user_email")
+    # create a user object with above data
+    new_user = models.User(name=name, email=email)
+    # persist user object to database
+    new_user.save()
+    return new_user.to_json()
