@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_appbuilder.security.mongoengine.manager import SecurityManager
 from flask_appbuilder import AppBuilder
 from flask_mongoengine import MongoEngine
@@ -49,3 +49,21 @@ def create_user():
     # persist user object to database
     new_user.save()
     return new_user.to_json()
+
+
+@app.route("/delete", methods=["POST"])
+def delete_user():
+    # retrieve data from html form
+    name = request.form.get("user_name")
+    # find all names that match
+    users = models.User.objects(name=name)
+    # get the first name from matching names
+    user = users.first()
+
+    if not user:
+        return jsonify({"error": "data not found"})
+    else:
+        user.delete()
+
+    status_message = user.name + " has been deleted"
+    return jsonify({"status": status_message})
