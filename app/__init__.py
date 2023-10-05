@@ -3,10 +3,9 @@ from flask import Flask
 from flask_appbuilder.security.mongoengine.manager import SecurityManager
 from flask_appbuilder import AppBuilder
 from flask_mongoengine import MongoEngine
-from app import views, models
 
 """
-  Logging configuration
+ Logging configuration
 """
 
 logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
@@ -30,3 +29,11 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor.execute("PRAGMA foreign_keys=ON")
     cursor.close()
 """
+
+from app import views, models
+
+
+@app.route("/list", methods=["GET"])
+def list_all_users():
+    data = list(models.User.objects)
+    return data
